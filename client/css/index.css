@@ -1,0 +1,21 @@
+html, body {
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  height: 100%;
+  width: 100% 
+}
+body {
+  background-color: black;
+}
+svg {
+  position:fixed;
+  top:0;
+  left:0;
+  height: 100%;
+  width: 100% 
+}
+#adjacency-list {
+  width: 500px;
+  height: 150px
+}
