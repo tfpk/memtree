@@ -8,6 +8,15 @@ This project aims to integrate with gdb, so that from the commandline you can vi
 
 The aim is to get it to be useful in teaching, and demonstrating errors in student code.
 
+## Basic Design Tenents
+
+#### This program should run without any linking into the compiled C program (though that program will need debug info)
+
+This is because making a drop-in solution, especially in a large environment like UNSW CSE is hard to do. It requires
+manipulating existing tools, or making life harder for students by instructing them to perform additional steps.
+
+It also increases the surface area for bugs or incompatibility issues.
+
 ## How do I install it?
 
 The code isn't fully set-up yet, so there's no simple install script.
@@ -29,3 +38,4 @@ Go to the webserver (probably at `0.0.0.0:8000`) and look around!
 
 <img src="resources/example_photos/Memtree_tree.png"/>
 <img src="resources/example_photos/Memtree_complex_tree.png"/>
+(note, the second image had some custom code. The ability to do this manually is a TODO)
