@@ -19,6 +19,14 @@ from gdb_interface import (
     gdb_execute,
     gdb_toggle_pagination
 )
+
+from gdb_breakpoints import (
+    MallocBreakpoint,
+    CallocBreakpoint,
+    ReallocBreakpoint,
+    FreeBreakpoint
+)
+
 from gdb_http_server import run
 
 CURRENT_DUMP = ""
@@ -82,39 +90,12 @@ XPython("xpy")
 XPython("xpython")
 
 
-class MallocBreakpoint(gdb.Breakpoint):
-    class MallocFinishBreakpoint(gdb.FinishBreakpoint):
-        def __init__(self, place, num_bytes, **kwargs):
-            super().__init__(place, internal=True, **kwargs)
-            self.num_bytes = num_bytes
-
-        def stop(self):
-            gdb.mallocs[str(self.return_value)] = self.num_bytes
-            return False
-
-    def __init__(self, *args, **kwargs):
-        if not hasattr(gdb, 'mallocs'):
-            gdb.mallocs = {}
-        if not hasattr(gdb, 'malloc_bps'):
-            gdb.malloc_bps = []
-
-        gdb_execute('')
-        super().__init__(*args, internal=True, **kwargs)
-
-    def stop(self):
-        cur_frame = gdb.newest_frame()
-        try:
-            num_bytes = gdb_print('bytes')
-        except:
-            return False
-
-        gdb.malloc_bps.append(self.MallocFinishBreakpoint(cur_frame, num_bytes))
-        return False
-
-
+print("... Initializing Breakpoints (ignore this) ...")
 MallocBreakpoint("malloc")
-MallocBreakpoint("calloc")
-MallocBreakpoint("realloc")
+CallocBreakpoint("calloc")
+ReallocBreakpoint("realloc")
+FreeBreakpoint("free")
+print("... Breakpoints Initialized ...")
 
 
 class MallocList(gdb.Command):
