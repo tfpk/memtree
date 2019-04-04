@@ -30,6 +30,19 @@ $ gdb -q -ex="source ~/<path-to-memtree>/gdb_ext/gdb_commands.py" -ex="b main" -
 (gdb) jserve <variable>
 ```
 
+which is equivalent to:
+```
+$ <your-c-compiler> -g -o program <file>.c
+$ gdb ./tree
+...
+(gdb) source ~/<path-to-memtree>/gdb_ext/gdb_commands.py
+...
+(gdb) break main
+(gdb) run
+(gdb) jserve <variable>
+
+```
+
 ## How do I use it?
 
 Go to the webserver (probably at `0.0.0.0:8000`) and look around!
